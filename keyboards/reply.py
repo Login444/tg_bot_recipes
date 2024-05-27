@@ -18,7 +18,7 @@ start_keyboard = ReplyKeyboardMarkup(
         ]
     ],
     resize_keyboard=True,
-    input_field_placeholder='Что вас интересует?'
+    input_field_placeholder='Что Вас интересует?'
 )
 
 # создаем переменную для удаления имеющейся клавиатуры.
@@ -35,6 +35,23 @@ main_menu_keyboard = ReplyKeyboardMarkup(
         [
             KeyboardButton(text='Добавить свой рецепт'),
             KeyboardButton(text='Редактировать свой рецепт'),
+        ],
+    ],
+    resize_keyboard=True,
+    input_field_placeholder='Что Вас интересует?'
+)
+
+add_recipe_keyboard = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Добавить название'),
+            KeyboardButton(text='Добавить категорию'),
+            KeyboardButton(text='Добавить ингридиенты'),
+        ],
+        [
+            KeyboardButton(text='Добавить время приготовления'),
+            KeyboardButton(text='Шаги приготовления'),
+            KeyboardButton(text='Добавить фото блюда'),
         ],
     ],
 )
