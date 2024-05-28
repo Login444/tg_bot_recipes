@@ -2,6 +2,10 @@ from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command, or_f
 from filters.chat_types import ChatTypeFilter
 from keyboards import reply
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+
+
 
 # создаем роутер который будет обрабатывать события в личной переписке с пользователем
 user_private_router = Router()
@@ -28,7 +32,7 @@ async def start_cmd(message: types.Message):
 # создаем обработчик команды /menu
 @user_private_router.message(or_f(Command('menu'), (F.text.lower() == 'меню')))
 async def menu_cmd(message: types.Message):
-    await message.answer("Здесь будет появляться меню бота (добавить, посмотреть, редактировать, выбрать и т.д.)")
+    await message.answer( 'Добро пожаловать в меню. Выберите действие:',reply_markup=reply.main_menu_keyboard)
 
 
 # создаем обработчик команды /about
@@ -41,3 +45,15 @@ async def about_cmd(message: types.Message):
 @user_private_router.message(or_f(Command('random'), (F.text.lower() == 'случайный рецепт')))
 async def random_cmd(message: types.Message):
     await message.answer("Тут будет запускаться рандомайзер рецептов")
+
+# ниже пишу класс добавления рецепта для работы с машиной состояний (FSM)
+class AddRecipe(StatesGroup):
+    title = State()
+    category = State()
+    ingredients = State()
+    cooking_time = State()
+    steps = State()
+    photo = State()
+
+
+

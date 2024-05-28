@@ -41,17 +41,17 @@ main_menu_keyboard = ReplyKeyboardMarkup(
     input_field_placeholder='Что Вас интересует?'
 )
 
-add_recipe_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Добавить название'),
-            KeyboardButton(text='Добавить категорию'),
-            KeyboardButton(text='Добавить ингридиенты'),
-        ],
-        [
-            KeyboardButton(text='Добавить время приготовления'),
-            KeyboardButton(text='Шаги приготовления'),
-            KeyboardButton(text='Добавить фото блюда'),
-        ],
-    ],
-)
+# add_recipe_keyboard = ReplyKeyboardMarkup(
+#     keyboard=[
+#         [
+#             KeyboardButton(text='Добавить название'),
+#             KeyboardButton(text='Добавить категорию'),
+#             KeyboardButton(text='Добавить ингридиенты'),
+#         ],
+#         [
+#             KeyboardButton(text='Добавить время приготовления'),
+#             KeyboardButton(text='Шаги приготовления'),
+#             KeyboardButton(text='Добавить фото блюда'),
+#         ],
+#     ],
+# )
