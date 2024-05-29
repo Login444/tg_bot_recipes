@@ -10,6 +10,7 @@ load_dotenv(find_dotenv())
 
 from handlers.user_private import user_private_router
 from common.bot_cmds_list import private
+from database.engine import create_db, drop_db
 
 # создаем константу, в которою передадим список типов обновлений на которые должен реагировать бот:
 ALLOWED_UPDATES = ["message", "edited_message"]
