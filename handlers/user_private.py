@@ -4,6 +4,8 @@ from filters.chat_types import ChatTypeFilter
 from keyboards import reply
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
+from sqlalchemy.ext.asyncio import AsyncSession
+from database.orm_querry import orm_add_recipe, orm_add_user, orm_add_category
 
 # создаем роутер который будет обрабатывать события в личной переписке с пользователем
 user_private_router = Router()
@@ -75,7 +77,7 @@ async def add_product(message: types.Message, state: FSMContext):
 
 @user_private_router.message(AddRecipe.title, F.text)
 async def add_product(message: types.Message, state: FSMContext):
-    await state.update_data(title=message.text)
+    await state.update_data(title=message.text, user_id=message.from_user.id)
     await message.answer("Введите категорию блюда")
     await state.set_state(AddRecipe.category)
 
@@ -87,7 +89,7 @@ async def add_product(message: types.Message, state: FSMContext):
 
 @user_private_router.message(AddRecipe.category, F.text)
 async def add_product(message: types.Message, state: FSMContext):
-    await state.update_data(category=message.text)
+    await state.update_data(category=message.text.capitalize())
     await message.answer("Укажите все ингридиенты")
     await state.set_state(AddRecipe.ingredients)
 
@@ -134,12 +136,16 @@ async def add_product(message: types.Message, state: FSMContext):
 
 
 @user_private_router.message(AddRecipe.photo, F.photo)
-async def add_product(message: types.Message, state: FSMContext):
+async def add_product(message: types.Message, state: FSMContext, session: AsyncSession):
     await state.update_data(photo=message.photo[-1].file_id)
-    await message.answer("Рецепт добавлен")
     data = await state.get_data()
-    await message.answer(str(data), reply_markup=reply.main_menu_keyboard)
+    # try:
+    await orm_add_recipe(session, data=data)
+    await message.answer("Рецепт добавлен", reply_markup=reply.main_menu_keyboard)
     await state.clear()
+    # except Exception as e:
+    #     await message.answer('Что то пошло не так, попробуйте позже', reply_markup=reply.main_menu_keyboard)
+    #     await state.clear()
 
 
 @user_private_router.message(AddRecipe.photo)
