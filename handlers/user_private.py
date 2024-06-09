@@ -5,7 +5,7 @@ from keyboards import reply
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.orm_querry import orm_add_recipe, orm_add_user, orm_add_category
+from database.orm_querry import orm_add_recipe
 
 # создаем роутер который будет обрабатывать события в личной переписке с пользователем
 user_private_router = Router()
